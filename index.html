@@ -34,7 +34,7 @@
 
             <audio id="audio" controls></audio>
          </br>
-            <p><input type="submit" name="submit"/></p>
+            <p><input type="submit" name="submit" id="liveRecordSubmit"/></p>
             <script>
 
                 let constraintObj = {
@@ -72,26 +72,15 @@
 
                 navigator.mediaDevices.getUserMedia(constraintObj)
                 .then(function(mediaStreamObj) {
-                    //connect the media stream to the first video element
-                    // let audio = document.querySelector('audio');
-                    // if ("srcObject" in audio) {
-                    //     audio.srcObject = mediaStreamObj;
-                    // } else {
-                    //     //old version
-                    //     video.src = window.URL.createObjectURL(mediaStreamObj);
-                    // }
-
-                    // video.onloadedmetadata = function(ev) {
-                    //     //show in the video element what is being captured by the webcam
-                    //     video.play();
-                    // };
 
                     //add listeners for saving video/audio
                     let start = document.getElementById('btnStart');
                     let stop = document.getElementById('btnStop');
                     let vidSave = document.getElementById('audio');
                     let mediaRecorder = new MediaRecorder(mediaStreamObj);
+                    let submitButton = document.getElementById('liveRecordSubmit');
                     let chunks = [];
+                    let currentAudioSaved = new Blob(chunks, { 'type' : 'audio/mp3;' });
 
                     start.addEventListener('click', (ev)=>{
                         mediaRecorder.start();
@@ -107,27 +96,56 @@
                     mediaRecorder.onstop = (ev)=>{
                         let blob = new Blob(chunks, { 'type' : 'audio/mp3;' });
                         chunks = [];
+                        currentAudioSaved = blob;
                         let videoURL = window.URL.createObjectURL(blob);
                         vidSave.src = videoURL;
                     }
+                    submitButton.addEventListener('click', (ev)=> {
+                        console.log(currentAudioSaved)
+                        var fReader = new FileReader();
+                        fReader.readAsDataURL(currentAudioSaved);
+                        rawData = "";
+                        fReader.onloadend = function(event){
+                            let url = 'http://127.0.0.1:5000/postData';
+                            rawData = event.target.result;
+                            console.log(rawData)
+                            let axiosConfig = {
+                              headers: {
+                                  'Content-Type': 'application/json'
+                              }
+                            };
+                            axios.post(url, {
+                                data : rawData
+                              },
+                              axiosConfig
+                            )
+                            .then((response) => {
+                              console.log(response);
+                            }, (error) => {
+                              console.log(error);
+                            });
+                          }
+                    })
+
                 })
                 .catch(function(err) {
                     console.log(err.name, err.message);
                 });
-                /*********************************
-                getUserMedia returns a Promise
-                resolve - returns a MediaStream Object
-                reject returns one of the following errors
-                AbortError - generic unknown cause
-                NotAllowedError (SecurityError) - user rejected permissions
-                NotFoundError - missing media track
-                NotReadableError - user permissions given but hardware/OS error
-                OverconstrainedError - constraint video settings preventing
-                TypeError - audio: false, video: false
-                *********************************/
             </script>
+            <audio id="finalAudio" controls></audio>
+            <p>TimeStamp: <span id="demo"></span></p>
+            <script>
+                // Get the audio element with id="my_video_1"
+                var aud = document.getElementById("finalAudio");
+                aud.src =
+                // Assign an ontimeupdate event to the audio element, and execute a function if the current playback position has changed
+                aud.ontimeupdate = function() {myFunction()};
 
+                function myFunction() {
+                  // Display the current position of the audio in a p element with id="demo"
+                  document.getElementById("demo").innerHTML = aud.currentTime;
+                }
+            </script>
     </div>
 </body>
 </html>
-  
