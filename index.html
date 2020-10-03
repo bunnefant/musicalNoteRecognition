@@ -124,6 +124,7 @@
                             }, (error) => {
                               console.log(error);
                             });
+                            // set final audio to song
                           }
                     })
 
@@ -132,7 +133,7 @@
                     console.log(err.name, err.message);
                 });
             </script>
-            <audio id="finalAudio" controls></audio>
+            <audio id="finalAudio" src="" controls></audio>
             <p>TimeStamp: <span id="demo"></span></p>
             <script>
                 // Get the audio element with id="my_video_1"
