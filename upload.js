@@ -21,6 +21,7 @@ form.addEventListener('submit', (e) => {
   // console.log(filename.files[0])
   var fReader = new FileReader();
   fReader.readAsDataURL(filename.files[0]);
+  console.log(filename.files[0].name);
   rawData = "";
   fReader.onloadend = function(event){
     rawData = event.target.result;
@@ -30,7 +31,8 @@ form.addEventListener('submit', (e) => {
       }
     };
     axios.post(url, {
-        data : rawData
+        data : rawData,
+        name : String(filename.files[0].name)
       },
       axiosConfig
     )

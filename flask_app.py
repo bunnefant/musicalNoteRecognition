@@ -19,11 +19,11 @@ def home():
 def setData():
     global name
     print(request.get_json())
-    name = request.get_json()['data']
+    name = request.get_json()['name']
     # name['h'] = request.form.
-    matlabEngine = matlab.engine.start_matlab()
-    matlabEngine.pyth(float(3),float(5)) #runs matlab function in the MATLAB directory
-    matlabEngine.quit()
+    # matlabEngine = matlab.engine.start_matlab()
+    # matlabEngine.pyth(float(3),float(5)) #runs matlab function in the MATLAB directory
+    # matlabEngine.quit()
     return request.get_json()
 
 
