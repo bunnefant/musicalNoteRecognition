@@ -2,7 +2,7 @@ const url = 'http://127.0.0.1:5000/postData';
 const form = document.querySelector('form');
 // const axios = require('axios')
 
-
+fileLocation = 'C:\Users\bunne\Desktop\hackathons\musicalNoteRecognition'
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -37,8 +37,8 @@ form.addEventListener('submit', (e) => {
     .then((response) => {
       console.log(response);
       let finalAudio = document.getElementById('finalAudio');
-
-      finalAudio.src = finalAudio.src.split('function()')[0] + filename.files[0].name //setting final audio player to uploaded song
+      console.log(finalAudio.src.split('index.html')[0])
+      finalAudio.src = finalAudio.src.split('index.html')[0] + filename.files[0].name //setting final audio player to uploaded song
 
     }, (error) => {
       console.log(error);

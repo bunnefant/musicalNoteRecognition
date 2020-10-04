@@ -130,6 +130,23 @@
                             // set final audio to song
                           }
                     })
+                    // var chordArray = [{time : 0.3, chord : 'C'},{time : 0.5, chord : 'D'},{time : 0.7, chord : 'A'},{time : 1.4, chord : 'B'},{time : 1.7, chord : 'G'}];
+                    var timeArray = [0.5,1.0,1.5,2.0,2.5];
+                    var chordArray = ['C', 'B', 'D', 'E', 'G'];
+                    var aud = document.getElementById("finalAudio");
+                    aud.ontimeupdate = function() {myFunction()};
+                    function myFunction() {
+                      // Display the current position of the audio in a p element with id="demo"
+                      for (let x = 0; x < chordArray.length; x++) {
+                        console.log(aud.currentTime);
+                        if (aud.currentTime <= timeArray[x]) {
+                          console.log(chordArray[x])
+                          document.getElementById("demo").innerHTML = String(chordArray[x]);
+                          break;
+                        }
+                      }
+                      // document.getElementById("demo").innerHTML = String(aud.currentTime.toFixed(1)) + ' hello';
+                    }
 
                 })
                 .catch(function(err) {
@@ -138,10 +155,10 @@
             </script>
             <audio id="finalAudio" src="" controls></audio>
             <p>TimeStamp: <span id="demo"></span></p>
-            <script>
+            <!-- <script>
                 // Get the audio element with id="my_video_1"
                 var aud = document.getElementById("finalAudio");
-                aud.src =
+                // aud.src =
                 // Assign an ontimeupdate event to the audio element, and execute a function if the current playback position has changed
                 aud.ontimeupdate = function() {myFunction()};
 
@@ -149,7 +166,7 @@
                   // Display the current position of the audio in a p element with id="demo"
                   document.getElementById("demo").innerHTML = aud.currentTime;
                 }
-            </script>
+            </script> -->
     </div>
 </body>
 </html>
