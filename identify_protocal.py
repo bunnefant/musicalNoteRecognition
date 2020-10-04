@@ -13,8 +13,8 @@ if __name__ == '__main__':
         'debug':False,
         'timeout':10 # seconds
     }
-    
-    '''This module can recognize ACRCloud by most of audio/video file. 
+
+    '''This module can recognize ACRCloud by most of audio/video file.
         Audio: mp3, wav, m4a, flac, aac, amr, ape, ogg ...
         Video: mp4, mkv, wmv, flv, ts, avi ...'''
     re = ACRCloudRecognizer(config)
@@ -29,6 +29,6 @@ if __name__ == '__main__':
 
     #print("duration_ms=" + str(ACRCloudRecognizer.get_duration_ms_by_file("music1.mp3")))
 
-    # buf = open("music1.mp3", 'rb').read()
-    #recognize by file_audio_buffer that read from file path, and skip 0 seconds from from the beginning of sys.argv[1].
-    #print(re.recognize_by_filebuffer(buf, 0, 10))
+    buf = open("music1.mp3", 'rb').read()
+    # recognize by file_audio_buffer that read from file path, and skip 0 seconds from from the beginning of sys.argv[1].
+    print(re.recognize_by_filebuffer(buf, 0, 10))

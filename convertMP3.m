@@ -11,18 +11,18 @@ N = length(signal);
 t = (0:N-1)/fs;
 per = N/fs;
 
-plot(t, signal)
-xlabel('Time (s)')
-ylabel('Ampl')
-title('Signal in time domain')
+% plot(t, signal)
+% xlabel('Time (s)')
+% ylabel('Ampl')
+% title('Signal in time domain')
 
-figure
+% figure
 tt = 0:1/fs:per;
 signal = signal(1:length(tt)-1);
-spectrogram(signal,1024,512,1024,fs,'yaxis')
-xlim([0,60])
-ylim([0,1])
-title('Spectrogram')
+% spectrogram(signal,1024,512,1024,fs,'yaxis')
+% xlim([0,60])
+% ylim([0,1])
+% title('Spectrogram')
 
 %[~,f,vect] = spectrogram(signal,1024,512,1024,fs,'yaxis');
 

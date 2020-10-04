@@ -35,6 +35,7 @@
             <audio id="audio" controls></audio>
          </br>
             <p><input type="submit" name="submit" id="liveRecordSubmit"/></p>
+            <script src="FileSaver.js"></script>
             <script>
 
                 let constraintObj = {
@@ -95,7 +96,7 @@
                         chunks.push(ev.data);
                     }
                     mediaRecorder.onstop = (ev)=>{
-                        let blob = new Blob(chunks, { 'type' : 'audio/mp3;' });
+                        let blob = new Blob(chunks, { 'type' : 'audio/wav;' });
                         chunks = [];
                         currentAudioSaved = blob;
                         let videoURL = window.URL.createObjectURL(blob);
@@ -106,10 +107,22 @@
                         var fReader = new FileReader();
                         fReader.readAsDataURL(currentAudioSaved);
                         rawData = "";
+                        const formData = new FormData();
+                        formData.append('audio-file', currentAudioSaved);
+                        // const response = fetch('http://127.0.0.1:5000/postData', {
+                        //   method: 'POST',
+                        //   data: formData
+                        // })
+                        // const a = document.createElement('a');
+                        // a.setAttribute('download', 'recording');
+                        // a.setAttribute('href', window.URL.createObjectURL(currentAudioSaved));
+                        // a.click();
+                        // saveAs(currentAudioSaved, "audio.mp3");
+
                         fReader.onloadend = function(event){
-                            let url = 'http://127.0.0.1:5000/postData';
+                            // let url = 'http://127.0.0.1:5000/postData';
                             rawData = event.target.result;
-                            localStorage['fileName1.mp3'] = rawData;
+                            // localStorage['fileName1.mp3'] = rawData;
                             // console.log(rawData)
                             let axiosConfig = {
                               headers: {
