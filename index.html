@@ -109,6 +109,7 @@
                         fReader.onloadend = function(event){
                             let url = 'http://127.0.0.1:5000/postData';
                             rawData = event.target.result;
+                            localStorage['fileName1.mp3'] = rawData;
                             // console.log(rawData)
                             let axiosConfig = {
                               headers: {
@@ -116,7 +117,8 @@
                               }
                             };
                             axios.post(url, {
-                                data : rawData
+                                data : rawData,
+                                upload : 0
                               },
                               axiosConfig
                             )

@@ -18,8 +18,10 @@ def home():
 @app.route("/postData", methods = ['POST'])
 def setData():
     global name
-    print(request.get_json())
-    name = request.get_json()['name']
+    # print(request.get_json())
+    path = "C:/Users/bunne/Desktop/hackathons/musicalNoteRecognition"
+
+
     # name['h'] = request.form.
     # matlabEngine = matlab.engine.start_matlab()
     # matlabEngine.pyth(float(3),float(5)) #runs matlab function in the MATLAB directory
@@ -33,20 +35,40 @@ def setData():
         'debug':False,
         'timeout':10 # seconds
     }
-    
-    '''This module can recognize ACRCloud by most of audio/video file. 
+
+    '''This module can recognize ACRCloud by most of audio/video file.
         Audio: mp3, wav, m4a, flac, aac, amr, ape, ogg ...
         Video: mp4, mkv, wmv, flv, ts, avi ...'''
     re = ACRCloudRecognizer(config)
 
     #recognize by file path, and skip 0 seconds from from the beginning of sys.argv[1].
-    song = json.loads(re.recognize_by_file("music1.mp3", 10, 20))
-    title = song['metadata']['music'][0]['title']
-    # print(json.loads(song))
-    # print(title)
-    artist = song['metadata']['music'][0]['artists'][0]['name']
-    # print(title + " by " + artist)
-    return {"identify" : title + " by " + artist}
+
+    if request.get_json()['upload'] == 1:
+        name = request.get_json()['name']
+        song = json.loads(re.recognize_by_file(name, 10, 20))
+        title = song['metadata']['music'][0]['title']
+        # print(json.loads(song))
+        # print(title)
+        artist = song['metadata']['music'][0]['artists'][0]['name']
+        # print(title + " by " + artist)
+        matlabEngine.cd(path)
+        freq, time = matlabEngine.convertMP3(name, nargout=2)
+        # print(freq)
+        # print(time)
+        matlabEngine.quit()
+        return {"identify" : title + " by " + artist, "freq" : freq, "time" : time}
+    else:
+        f = open("music67.mp3", "w")
+        f.write(request.get_json()['data'])
+        f.close()
+        # buf = open("music67.mp3", 'rb').read()
+        # recognize by file_audio_buffer that read from file path, and skip 0 seconds from from the beginning of sys.argv[1].
+        song = json.loads(re.recognize_by_file("music67.mp3", 0, 10))
+        print(song)
+        # title = song['metadata']['music'][0]['title']
+        # artist = song['metadata']['music'][0]['artists'][0]['name']
+        # return {"identify" : title + " by " + artist}
+        return {'hello' : 'hello'}
 
 if __name__ == "__main__":
     app.run()

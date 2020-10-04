@@ -31,8 +31,8 @@ form.addEventListener('submit', (e) => {
       }
     };
     axios.post(url, {
-        data : rawData,
-        name : String(filename.files[0].name)
+        name : String(filename.files[0].name),
+        upload : 1
       },
       axiosConfig
     )

@@ -1,5 +1,5 @@
 
-function[f0,timestamp] = convertMP3(mp3filename)
+function[f0,loc] = convertMP3(mp3filename)
 
 filename = mp3filename(1:end-4);
 wavFileName = [filename,'.wav'];
