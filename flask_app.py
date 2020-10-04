@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
+from acrcloud.recognizer import ACRCloudRecognizer
+from acrcloud.recognizer import ACRCloudRecognizeType
 import json
 import matlab.engine
 
