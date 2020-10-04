@@ -3,7 +3,6 @@ const form = document.querySelector('form');
 // const axios = require('axios')
 
 fileLocation = 'C:\Users\bunne\Desktop\hackathons\musicalNoteRecognition'
-
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -38,6 +37,7 @@ form.addEventListener('submit', (e) => {
     )
     .then((response) => {
       console.log(response);
+      document.getElementById("myHeader").innerHTML = response.data.identify;
       let finalAudio = document.getElementById('finalAudio');
       console.log(finalAudio.src.split('index.html')[0])
       finalAudio.src = finalAudio.src.split('index.html')[0] + filename.files[0].name //setting final audio player to uploaded song
