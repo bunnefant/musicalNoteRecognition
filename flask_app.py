@@ -48,18 +48,19 @@ def setData():
     if request.get_json()['upload'] == 1:
         name = request.get_json()['name']
         song = json.loads(re.recognize_by_file(name, 10, 20))
+        print(song)
         title = song['metadata']['music'][0]['title']
         # print(json.loads(song))
         # print(title)
         artist = song['metadata']['music'][0]['artists'][0]['name']
         # print(title + " by " + artist)
         matlabEngine.cd(path)
-        freq, time = matlabEngine.convertMP3(name, nargout=2)
+        notes, octave, time = matlabEngine.convertMP3(name, nargout=3)
         # print(freq)
         # print(time)
         matlabEngine.quit()
 
-        return {"identify" : title + " by " + artist, "freq" : list(freq._data), "time" : list(time._data)}
+        return {"identify" : title + " by " + artist, "notes" : notes, "time" : list(time._data), "octave" : list(octave._data)}
     # else:
         # print(request.files['file'])
         # f = open("music67.wav", "wb")
