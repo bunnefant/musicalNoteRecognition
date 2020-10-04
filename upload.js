@@ -2,6 +2,8 @@ const url = 'http://127.0.0.1:5000/postData';
 const form = document.querySelector('form');
 // const axios = require('axios')
 
+fileLocation = 'C:\Users\bunne\Desktop\hackathons\musicalNoteRecognition'
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -34,37 +36,15 @@ form.addEventListener('submit', (e) => {
     )
     .then((response) => {
       console.log(response);
+      let finalAudio = document.getElementById('finalAudio');
+      console.log(finalAudio.src.split('index.html')[0])
+      finalAudio.src = finalAudio.src.split('index.html')[0] + filename.files[0].name //setting final audio player to uploaded song
+
     }, (error) => {
       console.log(error);
     });
   }
   console.log(fReader)
+  console.log('hello')
 
-
-  // fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body:JSON.stringify({key : 'value'})
-  // }).then((response) => {
-  //   console.log(response)
-  // })
 })
-
-
-
-async function request(req)  {
-  dict = {
-    'hello' : 'data'
-  };
-  await fetch(req, {
-    method: 'POST',
-
-    body: JSON.stringify({"data" : "hello"}),
-    redirect: "follow",
-    mode: "cors"
-  }).then((response) => {
-    console.log(response);
-  });
-}
